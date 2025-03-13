@@ -1,0 +1,23 @@
+{
+  "home": {
+    "title": "首页"
+  },
+  "about": {
+    "title": "关于"
+  },
+  "clanstatus": {
+    "title": "工会数据"
+  },
+  "gamestat": {
+    "title": "游戏数据"
+  },
+  "gamingtools": {
+    "title": "游戏工具"
+  },
+  "halloffame": {
+    "title": "排行榜"
+  },
+  "playerstatus": {
+    "title": "玩家数据"
+  }
+}

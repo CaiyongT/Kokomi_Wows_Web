@@ -6,20 +6,19 @@
         <div v-else style="height:60px;display: flex;justify-content: center;align-items: center;">
             <h5>我是Logo喵</h5>
         </div>
-        <a-menu 
-            v-model:selectedKeys="selectedKeys" 
-            v-model:openKeys="openKeys" 
-            :items="items" 
-            theme="props.theme"
-            mode="inline">
-        </a-menu>
+        <a-menu mode="inline" :theme="props.theme" 
+                :selectedKeys="selectedKeys" 
+                :openKeys="openKeys" :items="items"
+                @click="onMenuClick" />
     </a-layout-sider>
 </template>
 
 <script setup>
-import { px2remTransformer, theme } from 'ant-design-vue';
 import { defineProps } from 'vue';
-import { ref, h } from 'vue';
+import { ref, h, onMounted ,computed} from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter, useRoute } from 'vue-router'
+//按需导入图标
 import {
     RadarChartOutlined,
     HomeOutlined,
@@ -29,9 +28,38 @@ import {
     ToolOutlined,
     InfoCircleOutlined
 } from '@ant-design/icons-vue';
-// 在模板中直接使用 props.collapsed 进行判断
 
-const selectedKeys = ref(['1']);
+
+// 路由相关
+const router = useRouter()
+
+const route = useRoute()
+// 记录选中的菜单 key、展开的菜单 key
+const selectedKeys = ref([])
+const openKeys = ref([])
+// 多语言
+const { t } = useI18n()
+
+// 点击菜单事件，根据 e.key 跳转
+function onMenuClick(e) {
+  // e.key 对应 items 数组中的 key
+  router.push({ name: e.key })
+  selectedKeys.value = [e.key]
+}
+
+// 当页面刷新或路由变化时，自动更新高亮选中的菜单项
+function updateMenuSelected() {
+  const currentName = route.name
+  if (currentName) {
+    selectedKeys.value = [currentName]
+  }
+}
+
+// 初次挂载时同步
+onMounted(() => {
+  updateMenuSelected()
+})
+
 const props = defineProps({
     collapsed: {
         default: false
@@ -40,54 +68,49 @@ const props = defineProps({
         default: 'light'
     }
 });
-const openKeys = ref([])
-const items = ref([
-    {
-        key: '1',
-        icon: () =>
-            h(HomeOutlined),
-        label: '主页',
-        title: '主页',
-    },
-    {
-        key: '2',
-        icon: () => h(RadarChartOutlined),
-        label: '玩家数据',
-        title: '查看单个玩家数据',
-    },
-    {
-        key: '3',
-        icon: () => h(DotChartOutlined),
-        label: '工会数据',
-        title: '查看工会数据',
-    },
-    {
-        key: '4',
-        icon: () => h(OrderedListOutlined),
-        label: '排行榜',
-        title: '查看Kokomi排行榜',
-    },
-    {
-        key: '5',
-        icon: () => h(FlagOutlined),
-        label: '对局数据',
-        title: '查看对局详情',
-    },
-    {
-        key: '6',
-        icon: () => h(ToolOutlined),
-        label: '小工具',
-        title: '查看kokomi小工具',
-    },
-    {
-        key: '7',
-        icon: () => h(InfoCircleOutlined),
-        label: '关于',
-        title: '关于Kokomi_Web项目',
-    },
 
-
+// 侧边栏菜单项
+// key 对应路由 name
+// label 使用 t(...) 结合 meta.titleKey
+const items = computed(()=>[
+  {
+    key: 'home', // route.name = "Home"
+    icon: () => h(HomeOutlined),
+    // 使用 t('router.home.title') 对应 zh.json/en.json 中的 router.home.title
+    label: t('router.home.title')
+  },
+  {
+    key: 'clanstatus',
+    icon: () => h(RadarChartOutlined),
+    label: t('router.clanstatus.title')
+  },
+  {
+    key: 'gamestat',
+    icon: () => h(DotChartOutlined),
+    label: t('router.gamestat.title')
+  },
+  {
+    key: 'halloffame',
+    icon: () => h(OrderedListOutlined),
+    label: t('router.halloffame.title')
+  },
+  {
+    key: 'gamingtools',
+    icon: () => h(FlagOutlined),
+    label: t('router.gamingtools.title')
+  },
+  {
+    key: 'playerstatus',
+    icon: () => h(ToolOutlined),
+    label: t('router.playerstatus.title')
+  },
+  {
+    key: 'about',
+    icon: () => h(InfoCircleOutlined),
+    label: t('router.about.title')
+  }
 ])
+
 const siderStyle = {
     textAlign: 'center',
     lineHeight: '120px',
@@ -95,8 +118,6 @@ const siderStyle = {
     transition: 'width 0.2s'
 };
 
-const collapsedStyle = {
-    width: '80px' // 当折叠时的宽度
-};
+
 
 </script>

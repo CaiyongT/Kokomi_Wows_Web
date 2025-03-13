@@ -1,0 +1,23 @@
+{
+  "home": {
+    "title": "Home"
+  },
+  "about": {
+    "title": "About"
+  },
+  "clanstatus": {
+    "title": "Clan Status"
+  },
+  "gamestat": {
+    "title": "Game Statistics"
+  },
+  "gamingtools": {
+    "title": "Gaming Tools"
+  },
+  "halloffame": {
+    "title": "Hall Of Fame"
+  },
+  "playerstatus": {
+    "title": "Player Status"
+  }
+}

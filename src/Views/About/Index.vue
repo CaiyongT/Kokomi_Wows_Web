@@ -1,6 +1,6 @@
 <template>
-    <h1>{{ t('home.welcome') }}</h1>
-    <a-calendar  />
+    <h1>{{ t('about.welcome') }}</h1>
+    <h1>{{ t('about.authors') }}</h1>
 </template>
 
 <script setup>
