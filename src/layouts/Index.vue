@@ -32,7 +32,7 @@ const contentStyle = {
   /* 让内容区域填充剩余空间 */
   flex: 1,
   /* 内边距 */
-  padding: '15px',
+  padding: '0px',
   /* 外边距 */
   margin:'15px',
   /* 背景色（测试阶段就乱改吧） */
@@ -41,5 +41,7 @@ const contentStyle = {
   border: '1px solid #ddd',
   /* 阴影 */
   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+
+  overflow:scroll
 };
 </script>
