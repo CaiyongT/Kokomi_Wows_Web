@@ -55,5 +55,13 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src') // 
     }
-  }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://129.226.90.10:8010',
+        changeOrigin: true, 
+      },
+    },
+  },
 })

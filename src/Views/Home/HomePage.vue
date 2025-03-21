@@ -14,6 +14,8 @@
     <!-- 显示当前选中的图片 -->
     <div v-if="currentImage">
       <h3>当前图片: {{ currentImage.fileName }}</h3>
+      <h3>当前图片URL: {{ currentImage.url }}</h3>
+      <h3>当前图片path: {{ currentImage.path }}</h3>
       <img :src="currentImage.url" alt="selected" />
     </div>
   </div>
@@ -36,7 +38,6 @@ const imageList = Object.entries(useWowsPng).map(([path, mod]) => {
     url: mod.default
   }
 })
-console.log(imageList);
 // currentImage 记录当前选中的图片，初始值可以是第一个
 const currentImage = ref(imageList[0] ?? null)
 </script>
